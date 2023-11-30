@@ -78,5 +78,161 @@ Introducing Jinja Template
 
 Repeat step 10, 11 and 12 again to confirm that Jinja works
 
+# Authentication and Database Connection
 
+## Step 17
+
+run `code login.html register.html` and paste these code
+
+* login.html
+```
+{% extends "layout.html" %}
+
+{% block body %}
+    <form action="/login" method="post">
+        <input name="username" placeholder="Username" type="text" required>
+        <input name="password" placeholder="Password" type="password" required>
+        <button type="submit">Login</button>
+    </form>
+    <p>New user? <a href="/register">Register here</a>.</p>
+{% endblock %}
+```
+and
+
+* register.html
+```
+{% extends "layout.html" %}
+
+{% block body %}
+    <form action="/register" method="post">
+        <input name="username" placeholder="Username" type="text" required>
+        <input name="password" placeholder="Password" type="password" required>
+        <button type="submit">Register</button>
+    </form>
+    <p>Already have an account? <a href="/login">Login here</a>.</p>
+{% endblock %}
+```
+
+![login and Register](./img/7.png)
+
+
+## Step 18
+
+Create a Postgresql database in pgadmin. You can call the database Flask
+
+![pgadmin](./img/8.png)
+
+## Step 19
+
+Run the code below to create a user table
+
+![pgadmin](./img/9.png)
+
+## Step 20
+
+Run the code below to see your user table content
+
+![pgadmin](./img/10.png)
+
+## Step 21
+
+update app.py to connect to database and handle login.html and register.html
+
+![pgadmin](./img/app_old.png)
+
+
+# Application modularization (or breaking it into sections)
+
+## Step 22
+
+run `code routes.py database.py` and paste these code
+
+* routes.py
+```
+from flask import session, redirect, url_for, render_template, request
+from werkzeug.security import check_password_hash, generate_password_hash
+from database import get_db_connection
+
+
+def index():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))  # Redirect to login if the session is not set
+    # Render index.html if the session is established
+    return render_template("index.html")
+
+def login():
+    if request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
+
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM users WHERE username = %s", (username,))
+        user = cur.fetchone()
+        print("User found:", user)  # Debug print
+        cur.close()
+        conn.close()
+
+        if user and check_password_hash(user[2], password):
+            session['user_id'] = user[0]  # Store the user's id in the session
+            print("Password match!")  # Debug print
+            return redirect(url_for('index'))
+        else:
+            print("Password mismatch!")  # Debug print
+            return "Invalid username or password"
+
+    return render_template("login.html")
+
+def register():
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+        hashed_password = generate_password_hash(password)
+
+        # Connect to the database
+        conn = get_db_connection()
+        cur = conn.cursor()
+
+        # Insert the new user into the database
+        cur.execute("INSERT INTO users (username, password) VALUES (%s, %s)", (username, hashed_password))
+        conn.commit()
+
+        # Close the database connection
+        cur.close()
+        conn.close()
+
+        # Redirect to the login page after successful registration
+        return redirect(url_for("login"))
+
+    # If it's a GET request or the form submission was not valid
+    return render_template("register.html")
+
+def greet():
+    name = request.form.get("name")
+    return render_template("greet.html", name=name)
+
+def logout():
+    session.pop('user_id', None)  # Remove the user_id from the session
+    return redirect(url_for('login'))
+```
+
+and
+
+* database.py
+```
+import psycopg2
+
+conn_params = {
+    'dbname': 'Flask',
+    'user': '<your-database-user-name>',
+    'password': '',
+    'host': 'localhost'
+}
+
+def get_db_connection():
+    return psycopg2.connect(**conn_params)
+
+```
+
+![login and Register](./img/11.png)
 

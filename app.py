@@ -1,5 +1,5 @@
 from flask import Flask
-from routes import index, login, register, greet, logout  # Import the route functions
+from routes import index, login, register, greet, logout
 
 
 app = Flask(__name__)
