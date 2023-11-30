@@ -82,6 +82,17 @@ Repeat step 10, 11 and 12 again to confirm that Jinja works
 
 ## Step 17
 
+> Familiarize with Postgresql
+
+* `https://www.youtube.com/watch?v=wTqosS71Dc4` - install postgresql on Mac video
+* `https://postgresapp.com/downloads.html` - download website
+* `https://www.youtube.com/watch?v=2rqMRkVvXcw` - install pgadmin on Mac
+* `https://www.postgresql.org/ftp/pgadmin/pgadmin4/v7.8/macos/` - download website
+* `https://www.youtube.com/watch?v=WFT5MaZN6g4` - pgAdmin Tutorial - How to Use pgAdmin
+* `https://www.youtube.com/watch?v=0n41UTkOBb0&t` - install postgresql on windows video
+
+## Step 18
+
 run `code login.html register.html` and paste these code
 
 * login.html
@@ -116,25 +127,25 @@ and
 ![login and Register](./img/7.png)
 
 
-## Step 18
+## Step 19
 
 Create a Postgresql database in pgadmin. You can call the database Flask
 
 ![pgadmin](./img/8.png)
 
-## Step 19
+## Step 20
 
 Run the code below to create a user table
 
 ![pgadmin](./img/9.png)
 
-## Step 20
+## Step 21
 
 Run the code below to see your user table content
 
 ![pgadmin](./img/10.png)
 
-## Step 21
+## Step 22
 
 update app.py to connect to database and handle login.html and register.html
 
@@ -240,7 +251,7 @@ if __name__ == "__main__":
 
 # Application modularization (or breaking app.py into seperate files)
 
-## Step 22
+## Step 23
 
 run `code routes.py database.py` and paste these code
 
@@ -334,7 +345,7 @@ def get_db_connection():
 ![login and Register](./img/11.png)
 
 
-## Step 22
+## Step 24
 
 add the code below to both index.html and greet.html
 
