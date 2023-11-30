@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <form action="/greet" method="post">
+        <input autocomplete="off" autofocus name="name" placeholder="Name" type="text">
+        <button type="submit">Greet</button>
+        <!-- Add this snippet inside the <body> tag of your index.html and greet.html -->
+        <p><a href="{{ url_for('logout') }}">Logout</a></p>
+    </form>
+{% endblock %}
