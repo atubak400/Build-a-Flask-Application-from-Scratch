@@ -333,3 +333,13 @@ def get_db_connection():
 
 ![login and Register](./img/11.png)
 
+
+## Step 22
+
+add the code below to both index.html and greet.html
+
+```
+<p><a href="{{ url_for('logout') }}">Logout</a></p>
+```
+
+![login and Register](./img/12.png)
