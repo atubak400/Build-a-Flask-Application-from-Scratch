@@ -1,5 +1,11 @@
 {% extends "layout.html" %}
 
+{% block head %}
+    {{ super() }}  <!-- Retains the content of the head block from layout.html -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/register.css') }}">
+    <title>Register</title>
+{% endblock %}
+
 {% block body %}
     <form action="/register" method="post">
         <input name="username" placeholder="Username" type="text" required>
