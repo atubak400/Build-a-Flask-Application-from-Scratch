@@ -2,15 +2,14 @@
 
 {% block head %}
     {{ super() }}  <!-- Retains the content of the head block from layout.html -->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/register.css') }}">
     <title>Register</title>
 {% endblock %}
 
 {% block body %}
-    <form action="/register" method="post">
-        <input name="username" placeholder="Username" type="text" required>
-        <input name="password" placeholder="Password" type="password" required>
-        <button type="submit">Register</button>
+    <form action="/register" method="post" class="container">
+        <input name="username" class="form-input" placeholder="Username" type="text" required>
+        <input name="password" class="form-input" placeholder="Password" type="password" required>
+        <button type="submit" class="submit-button">Register</button>
+        <p class="nav-control">Already have an account? <a href="/login">Login here</a>.</p>
     </form>
-    <p>Already have an account? <a href="/login">Login here</a>.</p>
 {% endblock %}

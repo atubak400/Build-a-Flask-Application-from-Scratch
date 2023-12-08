@@ -2,11 +2,15 @@
 
 {% block head %}
     {{ super() }}  <!-- Retains the content of the head block from layout.html -->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/greet.css') }}">
     <title>Greet</title>
 {% endblock %}
 
 {% block body %}
-    Hello, {{ name }}
-    <p><a href="{{ url_for('logout') }}">Logout</a></p>
+    <div class="nav">
+        <a class="nav-control" href="{{ url_for('index') }}" class="home-link">Home</a>
+        <a class="nav-control" href="{{ url_for('logout') }}" class="logout-link">Logout</a>
+    </div>
+   <div class="greeting-container">
+        <div class="greeting-message">Hello, {{ name }}.</div>
+    </div>
 {% endblock %}

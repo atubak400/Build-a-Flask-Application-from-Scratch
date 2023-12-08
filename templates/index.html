@@ -7,9 +7,12 @@
 {% endblock %}
 
 {% block body %}
-    <!-- Page specific content goes here -->
-    <form action="/greet" method="post">
-        <input autocomplete="off" autofocus name="name" placeholder="Name" type="text">
-        <button type="submit">Greet</button>
+    <div class="nav">
+        <a class="nav-control" href="{{ url_for('index') }}" class="home-link">Home</a>
+        <a class="nav-control" href="{{ url_for('logout') }}" class="logout-link">Logout</a>
+    </div>
+    <form action="/greet" method="post" class="container">
+        <input autocomplete="off" class="form-input" autofocus name="name" placeholder="Name" type="text">
+        <button type="submit" class="submit-button">Greet</button>
     </form>
 {% endblock %}

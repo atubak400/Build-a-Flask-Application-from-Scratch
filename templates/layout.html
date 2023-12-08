@@ -4,7 +4,7 @@
     {% block head %}    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
     <!-- The content of this block will be replaced by the content of the block from index.html -->
     {% endblock %}
 </head>
@@ -14,3 +14,4 @@
     {% endblock %}
 </body>
 </html>
+
