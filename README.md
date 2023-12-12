@@ -255,7 +255,7 @@ if __name__ == "__main__":
 
 run `code routes.py database.py` and paste these code
 
-* routes.py
+* ### routes.py
 ```
 from flask import session, redirect, url_for, render_template, request
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -324,9 +324,40 @@ def logout():
     return redirect(url_for('login'))
 ```
 
-and
+> Code Explanation
 
-* database.py
+* index Function:
+
+Checks if user_id is in the session. If not, it redirects to the login page.
+If user_id is present, it renders the index.html template, indicating the user is logged in.
+
+* login Function:
+Handles the login functionality.
+On a POST request (when the user submits the login form):
+Retrieves the username and password from the form.
+Connects to the database to find a user with the given username.
+If a user is found and the password hash matches the one stored in the database, it stores the user's ID in the session and redirects to the index page.
+If the credentials are incorrect, it returns an error message.
+On a GET request, it simply renders the login.html template.
+
+* register Function:
+Handles user registration.
+On a POST request (when the user submits the registration form):
+Retrieves the username and password from the form.
+Hashes the password for secure storage.
+Inserts the new user into the database.
+Redirects to the login page after successful registration.
+On a GET request, it renders the register.html template.
+
+* greet Function:
+A simple function that retrieves a name from a form and renders greet.html with the provided name.
+
+* logout Function:
+Logs out the user by removing user_id from the session.
+Redirects to the login page.
+
+
+* ### database.py
 ```
 import psycopg2
 
@@ -342,7 +373,26 @@ def get_db_connection():
 
 ```
 
-* app.py
+> Code Explanation
+
+* import psycopg2:
+
+This line imports the psycopg2 module, which is a PostgreSQL adapter for the Python programming language. It allows Python programs to connect to and interact with PostgreSQL databases.
+
+* conn_params = { ... }:
+Here, a dictionary named conn_params is created. It contains the parameters needed to establish a connection to a PostgreSQL database. These parameters include:
+'dbname': 'Flask' – The name of the database to connect to, in this case, 'Flask'.
+'user': '<your-database-user-name>' – The username of the database user. You need to replace <your-database-user-name> with the actual username.
+'password': '' – The password for the database user. It's currently an empty string, so you would need to provide the actual password if authentication is required.
+'host': 'localhost' – The host address of the database server. In this case, it's localhost, indicating that the database is running on the same machine as the Python script.
+
+* def get_db_connection()::
+This line defines a function named get_db_connection. This function, when called, will create and return a new database connection using the parameters defined in conn_params.
+
+* return psycopg2.connect(**conn_params):
+Inside the get_db_connection function, this line is responsible for creating the actual connection to the PostgreSQL database. The psycopg2.connect() function is called with **conn_params, which unpacks the conn_params dictionary and passes the connection parameters to connect(). The function then returns this new connection object.
+
+* ### app.py
 ```
 from flask import Flask
 from routes import index, login, register, greet, logout
@@ -361,6 +411,42 @@ if __name__ == "__main__":
     app.run(debug=True)
 ```
 
+> Code Explanation
+
+* from flask import Flask:
+This line imports the Flask class from the flask module. Flask is the main class of the Flask web framework and is used to create an instance of a web application.
+
+* from routes import index, login, register, greet, logout:
+Imports specific functions index, login, register, greet, and logout from a module named routes. These functions are likely to be view functions, which handle the logic for different routes (URLs) in your application.
+
+* app = Flask(__name__):
+Creates an instance of the Flask class. The __name__ variable is passed to help Flask determine the root path of the application, which is used for relative path calculations.
+
+* app.secret_key = 'atuba_kingsley_??_990909':
+Sets the secret key for the application, which is used by Flask to encrypt session data. It's important to keep this key secret and unpredictable for security reasons.
+
+* app.add_url_rule("/", "index", index):
+Adds a URL rule for the root URL ("/") which is handled by the index function. The "index" string is the endpoint name.
+
+* app.add_url_rule("/login", "login", login, methods=["GET", "POST"]):
+Adds a URL rule for "/login". The login function handles this route, and it accepts both GET and POST HTTP methods.
+
+* app.add_url_rule("/register", "register", register, methods=["GET", "POST"]):
+Similar to the previous line, this adds a URL rule for "/register", handled by the register function, accepting GET and POST methods.
+
+* app.add_url_rule("/greet", "greet", greet, methods=["POST"]):
+Adds a URL rule for "/greet", handled by the greet function. This route only accepts POST methods, which is typical for routes that process data submitted by the user.
+
+* app.add_url_rule("/logout", "logout", logout):
+Adds a URL rule for "/logout", handled by the logout function. No specific HTTP methods are mentioned, so it defaults to GET.
+
+* if __name__ == "__main__":
+This is a common Python idiom that checks if the script is being run as the main program and not imported as a module in another script. It's a standard way to control the execution of code in a Python module.
+
+* app.run(debug=True):
+Starts the Flask application with the debug mode enabled. Debug mode provides a debugger and reloader for convenient development, but it should be turned off in a production environment.
+
+
 
 ## Step 24
 
@@ -371,3 +457,12 @@ add the code below to both index.html and greet.html
 ```
 
 ![login and Register](./img/12.png)
+
+
+## Step 25
+
+Run the code below on the terminal
+
+```
+flask run
+```

@@ -2,13 +2,13 @@
 
 {% block head %}
     {{ super() }}  <!-- Retains the content of the head block from layout.html -->
-    <title>Greet</title>
+    <title>greet</title>
 {% endblock %}
 
 {% block body %}
     <div class="nav">
-        <a class="nav-control" href="{{ url_for('index') }}" class="home-link">Home</a>
-        <a class="nav-control" href="{{ url_for('logout') }}" class="logout-link">Logout</a>
+        <a class="nav-control home-link" href="{{ url_for('index') }}" >Home</a>
+        <a class="nav-control logout-link" href="{{ url_for('logout') }}" >Logout</a>
     </div>
    <div class="greeting-container">
         <div class="greeting-message">Hello, {{ name }}.</div>

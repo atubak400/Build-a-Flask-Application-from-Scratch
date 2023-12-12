@@ -5,8 +5,7 @@ from database import get_db_connection
 
 def index():
     if 'user_id' not in session:
-        return redirect(url_for('login'))  # Redirect to login if the session is not set
-    # Render index.html if the session is established
+        return redirect(url_for('login')) 
     return render_template("index.html")
 
 def login():
